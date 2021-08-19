@@ -10,6 +10,10 @@ class App(tk.Tk):
         self.title('Farm Animal Inventory')
         self.resizable(False, False)
 
+        # Simply set the theme
+        self.tk.call("source", "sun-valley.tcl")
+        self.tk.call("set_theme", "dark")
+
 if __name__ == "__main__":
     app = App()
     app.mainloop()
