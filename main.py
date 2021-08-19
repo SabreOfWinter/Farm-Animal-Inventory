@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import *
 from tkinter.messagebox import showerror
-
+from control_frame import ControlFrame
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -23,4 +23,5 @@ class App(tk.Tk):
 
 if __name__ == "__main__":
     app = App()
+    ControlFrame(app)
     app.mainloop()
