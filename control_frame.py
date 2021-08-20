@@ -3,6 +3,8 @@ from tkinter import ttk
 from tkinter import *
 from tkinter.messagebox import showerror
 from details_frame import DetailsFrame
+from medical_frame import MedicalFrame
+from account_frame import AccountFrame
 
 class ControlFrame(ttk.LabelFrame):
     def __init__(self, container):
@@ -39,32 +41,32 @@ class ControlFrame(ttk.LabelFrame):
         self.frames = {}
 
         self.frames["All_Details"] = DetailsFrame(container, 'all details')
-        self.frames["All_Medical"] = DetailsFrame(container, 'all med')
-        self.frames["All_Accounts"] = DetailsFrame(container, 'all acco')
+        self.frames["All_Medical"] = MedicalFrame(container, 'all med')
+        self.frames["All_Accounts"] = AccountFrame(container, 'all acco')
 
         self.frames["Sheep_Details"] = DetailsFrame(container, 'sheep details')
-        self.frames["Sheep_Medical"] = DetailsFrame(container, 'sheep med')
-        self.frames["Sheep_Accounts"] = DetailsFrame(container, 'sheep acco')
+        self.frames["Sheep_Medical"] = MedicalFrame(container, 'sheep med')
+        self.frames["Sheep_Accounts"] = AccountFrame(container, 'sheep acco')
 
         self.frames["Pigs_Details"] = DetailsFrame(container, 'pig details')
-        self.frames["Pigs_Medical"] = DetailsFrame(container, 'pig med')
-        self.frames["Pigs_Accounts"] = DetailsFrame(container, 'pig acco')
+        self.frames["Pigs_Medical"] = MedicalFrame(container, 'pig med')
+        self.frames["Pigs_Accounts"] = AccountFrame(container, 'pig acco')
 
         self.frames["Goats_Details"] = DetailsFrame(container, 'goat details')
-        self.frames["Goats_Medical"] = DetailsFrame(container, 'goat med')
-        self.frames["Goats_Accounts"] = DetailsFrame(container, 'goat acco')
+        self.frames["Goats_Medical"] = MedicalFrame(container, 'goat med')
+        self.frames["Goats_Accounts"] = AccountFrame(container, 'goat acco')
 
         self.frames["Poultry_Details"] = DetailsFrame(container, 'bird details')
-        self.frames["Poultry_Medical"] = DetailsFrame(container, 'bird med')
-        self.frames["Poultry_Accounts"] = DetailsFrame(container, 'bird acco')
+        self.frames["Poultry_Medical"] = MedicalFrame(container, 'bird med')
+        self.frames["Poultry_Accounts"] = AccountFrame(container, 'bird acco')
 
         self.frames["Dogs/Cats_Details"] = DetailsFrame(container, 'd/c details')
-        self.frames["Dogs/Cats_Medical"] = DetailsFrame(container, 'd/c med')
-        self.frames["Dogs/Cats_Accounts"] = DetailsFrame(container, 'd/c acco')
+        self.frames["Dogs/Cats_Medical"] = MedicalFrame(container, 'd/c med')
+        self.frames["Dogs/Cats_Accounts"] = AccountFrame(container, 'd/c acco')
 
         self.frames["Alpacas_Details"] = DetailsFrame(container, 'alpacas details')
-        self.frames["Alpacas_Medical"] = DetailsFrame(container, 'alpacas med')
-        self.frames["Alpacas_Accounts"] = DetailsFrame(container, 'alpacas acco')
+        self.frames["Alpacas_Medical"] = MedicalFrame(container, 'alpacas med')
+        self.frames["Alpacas_Accounts"] = AccountFrame(container, 'alpacas acco')
 
         self.change_frame(self.selected_animal)
 
