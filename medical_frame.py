@@ -6,7 +6,7 @@ from tkinter.messagebox import showerror
 class MedicalFrame(ttk.Frame):
     def __init__(self, container, animal_type):
         super().__init__(container)
-        print(animal_type)
+
         if(animal_type == "pig med"):
             self.test_label = ttk.Label(self, text="Test")
             self.test_label.grid(row=3, columnspan=3)    
