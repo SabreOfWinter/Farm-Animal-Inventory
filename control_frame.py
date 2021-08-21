@@ -2,9 +2,36 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import *
 from tkinter.messagebox import showerror
-from details_frame import DetailsFrame
-from medical_frame import MedicalFrame
-from account_frame import AccountFrame
+
+from frames.detail_frames.all_details import AllDetailsFrame
+from frames.medical_frames.all_medical import AllMedicalFrame
+from frames.accounts_frames.all_accounts import AllAccountsFrame
+
+from frames.detail_frames.sheep_details import SheepDetailsFrame
+from frames.medical_frames.sheep_medical import SheepMedicalFrame
+from frames.accounts_frames.sheep_accounts import SheepAccountsFrame
+
+from frames.detail_frames.pigs_details import PigsDetailsFrame
+from frames.medical_frames.pigs_medical import PigsMedicalFrame
+from frames.accounts_frames.pigs_accounts import PigsAccountsFrame
+
+from frames.detail_frames.poultry_details import PoultryDetailsFrame
+from frames.medical_frames.poultry_medical import PoultryMedicalFrame
+from frames.accounts_frames.poultry_accounts import PoultryAccountsFrame
+
+from frames.detail_frames.goats_details import GoatsDetailsFrame
+from frames.medical_frames.goats_medical import GoatsMedicalFrame
+from frames.accounts_frames.goats_accounts import GoatsAccountsFrame
+
+from frames.detail_frames.dogs_and_cats_details import DogsAndCatsDetailsFrame
+from frames.medical_frames.dogs_and_cats_medical import DogsAndCatsMedicalFrame
+from frames.accounts_frames.dogs_and_cats_accounts import DogsAndCatsAccountsFrame
+
+from frames.detail_frames.alpacas_details import AlpacasDetailsFrame
+from frames.medical_frames.alpacas_medical import AlpacasMedicalFrame
+from frames.accounts_frames.alpacas_accounts import AlpacasAccountsFrame
+
+from database import *
 
 class ControlFrame(ttk.LabelFrame):
     def __init__(self, container):
@@ -39,17 +66,38 @@ class ControlFrame(ttk.LabelFrame):
 
         # initialize frames
         self.frames = {}
-        
-        for animal_index in range(1, len(self.animal_option_menu_list)):
-            animal = self.animal_option_menu_list[animal_index]  
 
-            self.frames[str(animal + "_Details")] = DetailsFrame(container, str(animal + ' details'))
-            self.frames[str(animal + "_Medical")] = DetailsFrame(container, str(animal + ' medical'))
-            self.frames[str(animal + "_Accounts")] = DetailsFrame(container, str(animal + ' accounts'))
+        self.frames["All_Details"] = AllDetailsFrame(container)
+        self.frames["All_Medical"] = AllMedicalFrame(container)
+        self.frames["All_Accounts"] = AllAccountsFrame(container)
+
+        self.frames["Sheep_Details"] = SheepDetailsFrame(container)
+        self.frames["Sheep_Medical"] = SheepMedicalFrame(container)
+        self.frames["Sheep_Accounts"] = SheepAccountsFrame(container)
+
+        self.frames["Pigs_Details"] = PigsDetailsFrame(container)
+        self.frames["Pigs_Medical"] = PigsMedicalFrame(container)
+        self.frames["Pigs_Accounts"] = PigsAccountsFrame(container)
+
+        self.frames["Poultry_Details"] = PoultryDetailsFrame(container)
+        self.frames["Poultry_Medical"] = PoultryMedicalFrame(container)
+        self.frames["Poultry_Accounts"] = PoultryAccountsFrame(container)
+
+        self.frames["Goats_Details"] = GoatsDetailsFrame(container)
+        self.frames["Goats_Medical"] = GoatsMedicalFrame(container)
+        self.frames["Goats_Accounts"] = GoatsAccountsFrame(container)
+
+        self.frames["Dogs/Cats_Details"] = DogsAndCatsDetailsFrame(container)
+        self.frames["Dogs/Cats_Medical"] = DogsAndCatsMedicalFrame(container)
+        self.frames["Dogs/Cats_Accounts"] = DogsAndCatsAccountsFrame(container)
+
+        self.frames["Alpacas_Details"] = AlpacasDetailsFrame(container)
+        self.frames["Alpacas_Medical"] = AlpacasMedicalFrame(container)
+        self.frames["Alpacas_Accounts"] = AlpacasAccountsFrame(container)
 
         self.change_frame(self.selected_animal)
 
     def change_frame(self,selected_animal):
         frame = self.frames[str(self.selected_animal.get() + '_' + self.selected_type.get())]
-        # frame.reset()
+        frame.reset()
         frame.tkraise()
