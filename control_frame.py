@@ -38,6 +38,9 @@ class ControlFrame(ttk.LabelFrame):
 
         super().__init__(container)
 
+        #Create database if it doesn't currently exist
+        create_tables()
+
         # Create value lists
         self.option_menu_list = ["", "Details", "Medical", "Accounts"]
         self.animal_option_menu_list = ["", "All", "Sheep", "Pigs", "Poultry", "Goats", "Dogs/Cats", "Alpacas"]
