@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import *
-from tkinter.messagebox import showerror
+from database import *
 
 from frames.detail_frames.all_details import AllDetailsFrame
 from frames.medical_frames.all_medical import AllMedicalFrame
@@ -31,76 +30,53 @@ from frames.detail_frames.alpacas_details import AlpacasDetailsFrame
 from frames.medical_frames.alpacas_medical import AlpacasMedicalFrame
 from frames.accounts_frames.alpacas_accounts import AlpacasAccountsFrame
 
-from database import *
+class TopBar(tk.Frame):
+    def __init__(self, master):
+        super().__init__(master)
 
-class ControlFrame(ttk.LabelFrame):
-    def __init__(self, container):
+        # Create control variables
+        self.selected_type = tk.StringVar(value=master.option_menu_list[0])
+        self.selected_animal = tk.StringVar(value=master.animal_option_menu_list[0])
 
-        super().__init__(container)
 
+        # OptionMenu
+        self.animal_options = tk.OptionMenu(
+            self, 
+            self.selected_animal, 
+            *master.animal_option_menu_list, 
+            command=master.change_frame
+        ).grid(column=0, row=0, padx=5, pady=5)
+        
+        # OptionMenu
+        self.type_options = tk.OptionMenu(
+            self, 
+            self.selected_type, 
+            *master.option_menu_list, 
+            command=master.change_frame
+        ).grid(column=1, row=0, padx=5, pady=5)
+
+        self.title = tk.Button(self, text='a').grid(row=0, column=3)
+        
+        self.grid(column=0, row=0, padx=5, pady=5, sticky="nsew")
+
+class ControlFrame(tk.Frame):
+    def __init__(self, master):
+        super().__init__(master)
         #Create database if it doesn't currently exist
         create_tables()
 
         # Create value lists
-        self.option_menu_list = ["", "Details", "Medical", "Accounts"]
-        self.animal_option_menu_list = ["", "All", "Sheep", "Pigs", "Poultry", "Goats", "Dogs/Cats", "Alpacas"]
+        self.option_menu_list = ["Details", "Medical", "Accounts"]
+        self.animal_option_menu_list = ["All", "Sheep", "Pigs", "Poultry", "Goats", "Dogs/Cats", "Alpacas"]
+        self.frames = [
+            [AllDetailsFrame, SheepDetailsFrame, PigsDetailsFrame, PoultryDetailsFrame, GoatsDetailsFrame, DogsAndCatsDetailsFrame, AlpacasDetailsFrame],
+            [AllMedicalFrame, SheepMedicalFrame, PigsMedicalFrame, PoultryMedicalFrame, GoatsMedicalFrame, DogsAndCatsMedicalFrame, AlpacasMedicalFrame],
+            [AllAccountsFrame, SheepAccountsFrame, PigsAccountsFrame, PoultryAccountsFrame, GoatsAccountsFrame, DogsAndCatsAccountsFrame, AlpacasAccountsFrame]
+        ]
 
-        # Create control variables
-        self.selected_type = tk.StringVar(value=self.option_menu_list[1])
-        self.selected_animal = tk.StringVar(value=self.animal_option_menu_list[1])
+        self.navigation = TopBar(self)
+        self.frame = AllDetailsFrame(self) #Sets the inital frame to display
+        self.grid(column=0, row=0, padx=5, pady=5, sticky="nsew")
 
-        # OptionMenu
-        ttk.OptionMenu(
-            self, 
-            self.selected_animal, 
-            *self.animal_option_menu_list, 
-            command=self.change_frame
-        ).grid(column=0, row=0, padx=5, pady=5)
-        
-        # OptionMenu
-        ttk.OptionMenu(
-            self, 
-            self.selected_type, 
-            *self.option_menu_list, 
-            command=self.change_frame
-        ).grid(column=1, row=0, padx=5, pady=5)
-
-        self.grid(column=0, row=0, padx=5, pady=5, sticky='ew')
-
-        # initialize frames
-        self.frames = {}
-
-        self.frames["All_Details"] = AllDetailsFrame(container)
-        self.frames["All_Medical"] = AllMedicalFrame(container)
-        self.frames["All_Accounts"] = AllAccountsFrame(container)
-
-        self.frames["Sheep_Details"] = SheepDetailsFrame(container)
-        self.frames["Sheep_Medical"] = SheepMedicalFrame(container)
-        self.frames["Sheep_Accounts"] = SheepAccountsFrame(container)
-
-        self.frames["Pigs_Details"] = PigsDetailsFrame(container)
-        self.frames["Pigs_Medical"] = PigsMedicalFrame(container)
-        self.frames["Pigs_Accounts"] = PigsAccountsFrame(container)
-
-        self.frames["Poultry_Details"] = PoultryDetailsFrame(container)
-        self.frames["Poultry_Medical"] = PoultryMedicalFrame(container)
-        self.frames["Poultry_Accounts"] = PoultryAccountsFrame(container)
-
-        self.frames["Goats_Details"] = GoatsDetailsFrame(container)
-        self.frames["Goats_Medical"] = GoatsMedicalFrame(container)
-        self.frames["Goats_Accounts"] = GoatsAccountsFrame(container)
-
-        self.frames["Dogs/Cats_Details"] = DogsAndCatsDetailsFrame(container)
-        self.frames["Dogs/Cats_Medical"] = DogsAndCatsMedicalFrame(container)
-        self.frames["Dogs/Cats_Accounts"] = DogsAndCatsAccountsFrame(container)
-
-        self.frames["Alpacas_Details"] = AlpacasDetailsFrame(container)
-        self.frames["Alpacas_Medical"] = AlpacasMedicalFrame(container)
-        self.frames["Alpacas_Accounts"] = AlpacasAccountsFrame(container)
-
-        self.change_frame(self.selected_animal)
-
-    def change_frame(self,selected_animal):
-        frame = self.frames[str(self.selected_animal.get() + '_' + self.selected_type.get())]
-        frame.reset()
-        frame.tkraise()
+    def change_frame(self, selected):
+        self.frame = self.frames[self.option_menu_list.index(self.navigation.selected_type.get())][self.animal_option_menu_list.index(self.navigation.selected_animal.get())](self)
